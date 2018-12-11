@@ -1,0 +1,18 @@
+.icolor {
+  background-color: crimson !important;
+  pointer-events: none;
+}
+.trStyle {
+  display: inline-block;
+  margin-bottom: 3px;
+  td {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 10%;
+    background-color: darkgreen;
+    margin-right: 3px;
+    text-align: center;
+  }
+}
+

@@ -1,0 +1,82 @@
+<div class="container text-center">
+  <h3>Kino Home</h3>
+</div>
+<div class="container text-cnter bg-dark text-primary">
+  <div class="row">
+    <div class="col-4 text-center mb-4">
+      <h5>{{kino_data.kino_name}}</h5>
+      <img src="{{kino_data.kino_avatar}}" style="width: 300px; height: 300px">
+    </div>
+    <div class="col-8 text-center">
+      <div class="container">
+        <h4>Date end Time</h4>
+        <p *ngIf="!date.length">NO TIME</p>
+        <table>
+          <tr *ngFor="let date of date">
+            <td>
+              {{date.kino_name }} : {{ date.kino_date}} at {{date.kino_time}}
+              <button class="btn btn-outline-primary ml-3 mb-2"  (click)="openModal(template, date.chair_number); getReserve(date.id)">
+                <div>RESERVE</div>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4 mb-4">
+      <div class="container" *ngIf="kino_url">
+        <iframe width="450" height="350" [src]="kino_url" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal-->
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title ml-4">HaԼԼ</h4>
+    <button type="button" class="close pull-right btn-danger" aria-label="Close" (click)="modalRef.hide(); _reserve=[]">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container text-center">
+      <span class="ml-4">Chairs</span>
+    </div>
+    <table>
+      <tr *ngFor="let itemi of arrayOne(chair_row); let i = index;" class="trStyle">
+        <span>Լine:{{(i+1) + "&nbsp;&nbsp;&nbsp;&nbsp;"}}</span>
+        <td *ngFor="let itemj of arrayTwo(chair_col); let j = index;" (click)="reserve(i+1, j+1)" id="row-{{i+1}}col-{{j+1}}" class="tdStyle">{{(1+ j)}}</td>
+      </tr>
+    </table>
+    <div class="container text-center mb-1" *ngFor="let item of _reserve">
+      <span>Լine {{item.row}}, Chair: {{item.col}} </span>
+      <button class="btn btn-danger" (click)="delete_res(item)">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="container text-center  mt-2">
+      <button type="button" class="btn btn-primary" (click)="openModal2(templateNested)">Reserve</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #templateNested>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Reserve</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef2.hide();_reserve=[]">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container">
+      <span *ngFor="let item of _reserve">Լine: {{item.row}}, Chair: {{item.col}}<br></span>
+    </div>
+    <div class="container text-right">
+      <button class="btn btn-danger mr-2 mt-4"  (click)="save_res(); closeModal2()">Save</button>
+      <button class="btn btn-primary mt-4" (click)="closeModal2();_reserve=[]">Close</button>
+    </div>
+  </div>
+</ng-template>
