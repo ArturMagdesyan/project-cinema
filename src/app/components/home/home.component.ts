@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 // service
-import { SappService } from '../../service/sapp.service';
+import { SappService } from '../../service/AppService/sapp.service';
 
 @Component({
   selector: 'app-home',

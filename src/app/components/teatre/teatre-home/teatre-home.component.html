@@ -1,6 +1,11 @@
 <div class="container text-center">
-  <h3>{{teatre_data[0].teatre_name}}</h3>
+  <h3 *ngIf="teatre_data[0]">{{teatre_data[0].teatre_name}}</h3>
+  <h3 *ngIf="!teatre_data[0]">kino not</h3>
 </div>
+<!-- updat kino data
+---- for admin    -->
+<button (click)="updateTeatre($event)" class="btn btn-success" *ngIf="authChang">Update</button>
+
 <div class="container">
   <div class="row">
     <div class="col-md-3"  *ngFor="let kino of teatre_data">

@@ -1,0 +1,38 @@
+<div class="modal fade" bsModal #modalRef="bs-modal" tabindex="-1"
+     role="dialog" aria-labelledby="dialog-child-name" [config]="{backdrop: 'static'}">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header bg-darkx">
+        <div class="container text-center">
+          <h5>Sign in</h5>
+        </div>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body bg-primaryx">
+        <div class="container text-center">
+          <span class="text-danger" *ngIf="data_err">E-mail is required</span>
+          <form [formGroup]="loginForm" #formDir="ngForm" (submit)="SubLogin(loginForm)">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" formControlName="email" required autocomplete="off">
+              <span class="text-danger" *ngIf="loginForm.get('email').touched && loginForm.get('email').hasError('required')">E-mail is required</span>
+              <span class="text-danger" *ngIf="loginForm.get('email').touched && loginForm.get('email').hasError('email')">Not a valid email</span>
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Password</label>
+              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" formControlName="password" autocomplete="off" required>
+              <span class="text-danger" *ngIf="loginForm.get('password').touched && loginForm.get('password').hasError('required')">Password is required</span>
+              <span class="text-danger" *ngIf="loginForm.get('password').touched && loginForm.get('password').hasError('minlength')">Password must be at least 5 characters long.</span>
+            </div>
+            <div class="container text-right">
+              <button class="btn successx ">Login</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

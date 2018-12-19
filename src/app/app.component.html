@@ -1,16 +1,58 @@
-  <nav class="nav bg-secondary mb-2 p-2">
-    <div class="container d-inline text-center">
-      <div class="row">
-        <div class="col-sm-6">
-          <a class="nav-link d-inline" routerLink="/">Home</a>
-          <a class="nav-link d-inline" routerLink="/teatres">Teatres</a>
-        </div>
-        <div class="col-sm-6">
-          <button class="btn btn-primary btn active">Signin</button>
-          <button class="btn btn-danger ml-2 btn active">Signup</button>
-        </div>
-      </div>
-    </div>
-  </nav>
+<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/">
+          <i class="fa fa-home"></i>
+          Home
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/teatres">
+          <i class='fa 	fas fa-star'></i>
+          Teatres
+        </a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav mr-4" *ngIf="!user">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/" (click)="templateName = 'login'">
+          <i class="fa fas fa-sign-in"></i>
+          Login
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/signup">
+          <i class="fa 	fas fa-user">
+          </i>
+          Sign up
+        </a>
+      </li>
+    </ul>
+
+    <!--Whrith username-->
+    <ul class="navbar-nav mr-4" *ngIf="_guardChange">
+      <li class="nav-item">
+        <span class="text-primary d-inline-block mt-1 mr-4 p-1 bg-white border border-success rounded-right rounded-left">{{ user.username }}</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="logout()">
+          <i class="fa fas fa-sign-in"></i>
+          Logout
+        </a>
+      </li>
+    </ul>
+
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+
+<!--Modal // Login in -->
+<app-modal [templateName]="templateName" (clearTemplate)="templateName = ''"></app-modal>
 
 <router-outlet></router-outlet>

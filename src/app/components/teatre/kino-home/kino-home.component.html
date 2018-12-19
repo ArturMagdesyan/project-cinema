@@ -1,6 +1,10 @@
 <div class="container text-center">
   <h3>Kino Home</h3>
 </div>
+<!--  Update for
+----- ADMIN   -->
+<button class="btn btn-success" (click)="update()" *ngIf="_guardKinoDate">Update</button>
+
 <div class="container text-cnter bg-dark text-primary">
   <div class="row">
     <div class="col-4 text-center mb-4">
@@ -11,13 +15,18 @@
       <div class="container">
         <h4>Date end Time</h4>
         <p *ngIf="!date.length">NO TIME</p>
+        <p class="text-danger">{{message}}</p>
         <table>
           <tr *ngFor="let date of date">
             <td>
               {{date.kino_name }} : {{ date.kino_date}} at {{date.kino_time}}
               <button class="btn btn-outline-primary ml-3 mb-2"  (click)="openModal(template, date.chair_number); getReserve(date.id)">
+
                 <div>RESERVE</div>
               </button>
+              <!-- cancel reserve
+              --- Admin -->
+              <button class="btn btn-danger" (click)="cancelReserve(date.id)" *ngIf="_guardCanseleReserve">Cancel Reserve</button>
             </td>
           </tr>
         </table>

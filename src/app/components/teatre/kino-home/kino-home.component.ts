@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 // router
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 // service
-import {SappService} from '../../../service/sapp.service';
+import {SappService} from '../../../service/AppService/sapp.service';
 // for iframe
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 // Modal
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+// _guard
+import { _guardFn } from '../../../_guard';
 
 @Component ({
   selector: 'app-kino-home',
@@ -29,8 +31,13 @@ export class KinoHomeComponent implements OnInit {
   // Modal
   public modalRef: BsModalRef;
   public modalRef2: BsModalRef;
+  public message: string;
+  public _guardKinoDate = _guardFn('4');
+  public _guardReserve = _guardFn('5');
+  public _guardCanseleReserve = _guardFn('6');
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private service: SappService,
               public sanitizer: DomSanitizer,
               private modalService: BsModalService) { }
@@ -59,6 +66,10 @@ export class KinoHomeComponent implements OnInit {
   }
   // modal
   openModal(template, param) {
+    if ( !this._guardReserve ) {
+      this.message = 'Plise Sign up';
+      return false;
+    }
     this.modalRef = this.modalService.show(template, {class: 'modal-md'});
     // for chair row & col
     this.chair_number = param;
@@ -77,7 +88,10 @@ export class KinoHomeComponent implements OnInit {
   }
   // reserve
   reserve(row, col) {
-    const obj = {date_id: this.reserveDate, row: row, col: col};
+    // get user id
+    let id = JSON.parse(localStorage.getItem('cinemaUser'));
+    id = id['id'];
+    const obj = {user_id: id, date_id: this.reserveDate, row: row, col: col};
     this._reserve.push(obj);
     const ell = document.getElementById(`row-${row}col-${col}`);
     ell.className = 'icolor';
@@ -106,6 +120,9 @@ export class KinoHomeComponent implements OnInit {
   }
   // get reserve data
   getReserve(id) {
+    if ( !this._guardReserve ) {
+      return false;
+    }
     this.reserveDate = id;
     this.service.get(`/get-reserve/${id}`).subscribe(
       res => {
@@ -118,5 +135,16 @@ export class KinoHomeComponent implements OnInit {
       err => {
         console.log(err);
       });
+  }
+  // ADMIN
+  // update date
+  update() {
+    const param = '3' + '.' + this.id;
+    this.router.navigate(['/admin/table', param]);
+  }
+  // cansle reserve
+  cancelReserve(id) {
+   const param = '4' + id;
+   this.router.navigate(['/admin/table', param]);
   }
 }
