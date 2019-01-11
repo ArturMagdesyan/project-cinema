@@ -14,6 +14,8 @@ import { _guardFn } from '../../../_guard';
 export class TeatreComponent implements OnInit {
   public  teatres: any;
   public  authChang = _guardFn('2');
+  public myImage = 'assets/images/a.jpg';
+
   constructor(private service: SappService, private router: Router) { }
 
   ngOnInit() {

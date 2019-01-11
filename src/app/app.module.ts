@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { ColorPickerModule } from 'ngx-color-picker';
+
 // routing
 import { AppRoutingModule } from './app-routing.module';
 // Form
@@ -27,6 +29,7 @@ import { LoginComponent } from './components/modals/login/login.component';
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
+    ColorPickerModule,
     ReactiveFormsModule,
     ModalModule.forRoot(),
   ],

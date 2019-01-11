@@ -1,5 +1,19 @@
 <div class="container text-center">
   <p>Table</p>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-danger mr-2" (click)="back()">Back</button>
+        <button class="btn btn-danger" (click)="next()">Next</button>
+      </div>
+      <div class="col">
+          <img [src]="uploadFile"  style="height: 40px; width: 40px">
+          <input type="number" name="imgDataId" style="width: 50px" [(ngModel)]="imgDataId">
+          <input type="file" id="file" (change)="fileChangeEvent($event); handleFileInput($event.target.files)" placeholder="Upload file..." style="width: 150px" accept="image/*"/>
+          <button type="button" (click)="upload()">Upload</button>
+      </div>
+    </div>
+  </div>
 </div>
 <ng2-smart-table [settings]="settings" [source]="data"
                  (deleteConfirm)="onDeleteConfirm($event)"

@@ -8,6 +8,8 @@ import {  ActivatedRoute } from '@angular/router';
 // Admin Service
 import { AdminService } from '../../../service/AdminService/admin.service';
 
+import {Definition} from '@angular/compiler-cli';
+
 @Component ({
   selector: 'app-table1',
   templateUrl: './table1.component.html',
@@ -29,6 +31,10 @@ export class Table1Component implements OnInit {
   // 2 number data teble
   // 3 number data id
   public seqNumber;
+  public imgDataId = 0;
+  public uploadFile = 'https://pictition.com/img/campaign/default-photo.png';
+
+  filesToUpload: File = null;
 
   constructor( private service: SappService,
                private ruter: ActivatedRoute,
@@ -99,5 +105,37 @@ export class Table1Component implements OnInit {
     } else {
        param.confirm.reject();
     }
+  }
+  // back fn
+  back() {
+    history.back();
+  }
+  // next fn
+  next() {
+    history.go(1);
+  }
+
+  fileChangeEvent(fileInput: any) {
+    this.filesToUpload = <File>fileInput.target.files[0];
+  }
+
+  upload() {
+    if (this.imgDataId <= 0) {
+      this.imgDataId = 0;
+      return false;
+    }
+    const fd: any = new FormData();
+    fd.append('image', this.filesToUpload, this.filesToUpload.name);
+    this.service.post(`/upload-file/${this.imgDataId}`, fd)
+      .subscribe(res => console.log('files', res));
+  }
+
+  handleFileInput(file: FileList) {
+    this.filesToUpload = file.item(0);
+    const render = new FileReader();
+    render.onload = (event: any) => {
+     this.uploadFile = event.target.result;
+    };
+    render.readAsDataURL(this.filesToUpload);
   }
 }

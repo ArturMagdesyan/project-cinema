@@ -144,7 +144,7 @@ export class KinoHomeComponent implements OnInit {
   }
   // cansle reserve
   cancelReserve(id) {
-   const param = '4' + id;
+   const param = '4' + '.' + id;
    this.router.navigate(['/admin/table', param]);
   }
 }
